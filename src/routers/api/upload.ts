@@ -1,5 +1,5 @@
+import { upload } from '@/lib/upload'
 import { Router } from 'express'
-import { upload } from '../../lib/upload'
 
 const uploadRouter = Router()
 

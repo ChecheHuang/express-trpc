@@ -1,6 +1,6 @@
+import { SERVER_ADDRESS } from '@/config'
 import chalk from 'chalk'
 import { NextFunction, Request, Response } from 'express'
-import { SERVER_ADDRESS } from '../config'
 
 const logMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const start = new Date()

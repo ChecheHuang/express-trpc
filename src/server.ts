@@ -1,3 +1,4 @@
+import { PORT, REST_PREFIX, ROUTER_PREFIX, SERVER_ADDRESS, TRPC_PREFIX } from '@/config'
 import { Context, createContext } from '@/lib/trpc'
 import logMiddleware from '@/middleware/logMiddleware'
 import apiRouter from '@/routers/api'
@@ -14,7 +15,6 @@ import path from 'path'
 import swaggerUi from 'swagger-ui-express'
 import { createOpenApiExpressMiddleware, generateOpenApiDocument } from 'trpc-openapi'
 import { Server } from 'ws'
-import { PORT, REST_PREFIX, ROUTER_PREFIX, SERVER_ADDRESS, TRPC_PREFIX } from './config'
 
 const globalRouter = Router()
 
@@ -27,7 +27,9 @@ async function startServer() {
   globalRouter.use(logMiddleware)
 
   //todo Handle incoming API requests
-  globalRouter.use('/api', apiRouter)
+  globalRouter.use(REST_PREFIX, apiRouter)
+  //todo Handle incoming OpenAPI requests
+  globalRouter.use(REST_PREFIX, createOpenApiExpressMiddleware({ router: trpcRouter, createContext }))
 
   //todo Handle incoming TRPC requests
   globalRouter.use(
@@ -56,13 +58,9 @@ async function startServer() {
     docsUrl: 'https://github.com/jlalmes/trpc-openapi',
     tags: [],
   })
-
   // Serve Swagger UI with our OpenAPI schema
   globalRouter.use('/api-docs', swaggerUi.serve)
   globalRouter.get('/api-docs', swaggerUi.setup(openApiDocument))
-
-  //todo Handle incoming OpenAPI requests
-  globalRouter.use(REST_PREFIX, createOpenApiExpressMiddleware({ router: trpcRouter, createContext }))
 
   // Serve static files
   const publicPath = path.join(path.resolve(__dirname, '..'), '/public')
