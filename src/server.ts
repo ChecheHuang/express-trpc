@@ -64,10 +64,7 @@ async function startServer() {
   // Serve static files
   const publicPath = path.join(path.resolve(__dirname, '..'), '/public')
   globalRouter.use(express.static(publicPath))
-  globalRouter.get('/*', function (req, res) {
-    console.log(req.url)
-    res.sendFile(path.join(publicPath, 'index.html'))
-  })
+  globalRouter.get('/*', (_, res) => res.sendFile(path.join(publicPath, 'index.html')))
 
   app.use(ROUTER_PREFIX, globalRouter)
 
