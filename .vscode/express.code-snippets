@@ -1,0 +1,7 @@
+{
+  "console": {
+    "prefix": "clgg",
+    "body": ["console.cuslog(${1})"],
+    "description": "custom console",
+  },
+}

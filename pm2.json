@@ -1,0 +1,16 @@
+{
+  "name": "haiguang",
+  "script": "dist/server.js",
+  "watch": false,
+  "watch_delay": 3000,
+  "ignore_watch": [
+    "node_modules",
+    "logs"
+  ],
+  "watch_options": {
+    "followSymlinks": false
+  },
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
