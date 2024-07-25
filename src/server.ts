@@ -27,8 +27,8 @@ async function startServer() {
   globalRouter.use(logMiddleware)
 
   //todo Handle incoming API requests
-  globalRouter.use(REST_PREFIX, apiRouter)
   //todo Handle incoming OpenAPI requests
+  globalRouter.use(REST_PREFIX, apiRouter)
   globalRouter.use(REST_PREFIX, createOpenApiExpressMiddleware({ router: trpcRouter, createContext }))
 
   //todo Handle incoming TRPC requests
@@ -42,7 +42,6 @@ async function startServer() {
 
   //todo Handle incoming WebSocket requests
   const wss = new Server({ server })
-
   const wsHandler = applyWSSHandler({
     wss,
     router: trpcRouter,
